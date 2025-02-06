@@ -10,9 +10,28 @@ from sklearn.metrics import mean_absolute_error
 # Title of the Web App
 st.title("🏎️ ACC Setup Optimizer")
 
-# Track and Car Selection
-track = st.selectbox("Select Track", ["Monza", "Spa", "Silverstone"])
-car = st.selectbox("Select Car", ["Ferrari 488 GT3", "Porsche 911 GT3", "Lamborghini Huracán GT3"])
+# Expanded Track and Car Selection
+tracks = [
+    "Barcelona", "Brands Hatch", "Hungaroring", "Misano", "Monza", "Nürburgring",
+    "Paul Ricard", "Silverstone", "Spa-Francorchamps", "Zandvoort", "Zolder",
+    "Snetterton", "Oulton Park", "Donington Park", "Kyalami", "Suzuka",
+    "Weathertech Raceway Laguna Seca", "Mount Panorama", "Imola", "Watkins Glen",
+    "Circuit of the Americas (COTA)", "Indianapolis"
+]
+
+cars = [
+    "2019 Aston Martin Vantage GT3", "2019 Audi R8 LMS Evo", "2022 Audi R8 LMS Evo II",
+    "2018 Bentley Continental GT3", "2022 BMW M4 GT3", "2017 BMW M6 GT3",
+    "2020 Ferrari 488 GT3 Evo", "2019 Lamborghini Huracán GT3 Evo", "2019 McLaren 720S GT3",
+    "2020 Mercedes AMG GT3", "2019 Porsche 911 II GT3 R", "2019 Honda NSX GT3 Evo",
+    "2016 Lexus RC F GT3", "2015 Mercedes AMG GT3", "2018 Nissan GT-R NISMO GT3",
+    "2013 Aston Martin V12 Vantage GT3", "2015 Audi R8 LMS", "2015 Bentley Continental GT3",
+    "2015 McLaren 650S GT3", "2017 Honda NSX GT3", "2018 Ferrari 488 GT3",
+    "2018 Porsche 911 GT3 R", "2017 Reiter Engineering R-EX GT3", "2012 Emil Frey Jaguar G3"
+]
+
+track = st.selectbox("Select Track", tracks)
+car = st.selectbox("Select Car", cars)
 
 # File uploader for telemetry CSV
 uploaded_file = st.file_uploader("📂 Upload Telemetry Data (CSV)", type=["csv"])
