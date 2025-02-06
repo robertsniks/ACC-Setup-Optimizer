@@ -9,21 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 
 # Custom UI Styling
-st.markdown(
-    """
-    <style>
-        .stApp {
-            background-color: #1E1E1E;
-            color: white;
-        }
-        .stButton>button {
-            background-color: #FF5733;
-            color: white;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+
 
 # Title of the Web App
 st.title("🏎️ ACC Setup Optimizer")
