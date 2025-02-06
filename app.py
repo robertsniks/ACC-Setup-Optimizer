@@ -3,9 +3,27 @@ import pandas as pd
 import json
 import numpy as np
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
+
+# Custom UI Styling
+st.markdown(
+    """
+    <style>
+        .stApp {
+            background-color: #1E1E1E;
+            color: white;
+        }
+        .stButton>button {
+            background-color: #FF5733;
+            color: white;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # Title of the Web App
 st.title("🏎️ ACC Setup Optimizer")
@@ -24,12 +42,9 @@ cars = [
     "2019 Aston Martin Vantage GT3", "2019 Audi R8 LMS Evo", "2022 Audi R8 LMS Evo II",
     "2018 Bentley Continental GT3", "2022 BMW M4 GT3", "2017 BMW M6 GT3",
     "2020 Ferrari 488 GT3 Evo", "2019 Lamborghini Huracán GT3 Evo", "2019 McLaren 720S GT3",
-    "2020 Mercedes-AMG GT3", "2019 Porsche 911 II GT3 R", "2019 Honda NSX GT3 Evo",
-    "2016 Lexus RC F GT3", "2015 Mercedes-AMG GT3", "2018 Nissan GT-R NISMO GT3",
-    "2013 Aston Martin V12 Vantage GT3", "2015 Audi R8 LMS", "2015 Bentley Continental GT3",
-    "2015 McLaren 650S GT3", "2017 Honda NSX GT3", "2018 Ferrari 488 GT3",
-    "2018 Porsche 911 GT3 R", "2017 Reiter Engineering R-EX GT3", "2012 Emil Frey Jaguar G3",
-    "2023 Porsche 911 GT3 R (992)", "2024 Ford Mustang GT3"
+    "2020 Mercedes-AMG GT3", "2019 Porsche 911 II GT3 R", "2023 Porsche 992 GT3 R",
+    "2024 Ford Mustang GT3", "2019 Honda NSX GT3 Evo", "2016 Lexus RC F GT3",
+    "2015 Mercedes-AMG GT3", "2018 Nissan GT-R NISMO GT3", "2013 Aston Martin V12 Vantage GT3"
 ]
 
 track = st.selectbox("Select Track", tracks)
@@ -87,6 +102,13 @@ if uploaded_file:
     ax.plot(df["LapTime"], df["TireTemp_RR"], label="Rear Right")
     ax.legend()
     st.pyplot(fig)
+
+    # Moving Car on Track Visualization
+    st.subheader("📍 Car Position on Track")
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['X'], y=df['Y'], mode="lines", name="Track Layout"))
+    fig.add_trace(go.Scatter(x=[df['X'][0]], y=[df['Y'][0]], mode="markers", name="Car Position", marker=dict(color="red", size=10)))
+    st.plotly_chart(fig)
 
     # Session State for Saving and Loading Setups
     if "saved_setup" not in st.session_state:
