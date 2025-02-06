@@ -7,9 +7,7 @@ import plotly.graph_objects as go
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
-
-# Custom UI Styling
-
+import time
 
 # Title of the Web App
 st.title("🏎️ ACC Setup Optimizer")
@@ -89,12 +87,21 @@ if uploaded_file:
     ax.legend()
     st.pyplot(fig)
 
-    # Moving Car on Track Visualization
-    st.subheader("📍 Car Position on Track")
+    # Moving Car on Track Visualization (Animated)
+    st.subheader("📍 Car Position on Track (Animated)")
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df['X'], y=df['Y'], mode="lines", name="Track Layout"))
-    fig.add_trace(go.Scatter(x=[df['X'][0]], y=[df['Y'][0]], mode="markers", name="Car Position", marker=dict(color="red", size=10)))
-    st.plotly_chart(fig)
+    car_trace = go.Scatter(x=[], y=[], mode="markers", name="Car Position", marker=dict(color="red", size=10))
+    fig.add_trace(car_trace)
+    st_plotly_chart = st.plotly_chart(fig)
+
+    # Animate car movement
+    for i in range(len(df)):
+        car_trace.x = [df['X'][i]]
+        car_trace.y = [df['Y'][i]]
+        fig.update_traces(x=car_trace.x, y=car_trace.y)
+        st_plotly_chart.plotly_chart(fig)
+        time.sleep(0.1)
 
     # Session State for Saving and Loading Setups
     if "saved_setup" not in st.session_state:
